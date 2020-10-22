@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  backendUrl: 'https://cql-gestion-menu.herokuapp.com/'
+
+
 };
