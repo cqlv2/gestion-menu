@@ -12,6 +12,11 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { GestionMenuComponent } from './gestion-menu/gestion-menu.component';
 import { GestionPlatComponent } from './gestion-plat/gestion-plat.component';
 import { GestionProduitComponent } from './gestion-produit/gestion-produit.component';
+import { FooterComponent } from './footer/footer.component';
+import { UnitePipe } from './pipes/unite.pipe';
+import { Enum2strPipe } from './pipes/enum2str.pipe';
+import { FormProduitComponent } from './form-produit/form-produit.component';
+import { InfoProduitComponent } from './info-produit/info-produit.component';
 
 
 @NgModule({
@@ -21,13 +26,20 @@ import { GestionProduitComponent } from './gestion-produit/gestion-produit.compo
     GestionMenuComponent,
     GestionPlatComponent,
     GestionProduitComponent,
+    FooterComponent,
+    UnitePipe,
+    Enum2strPipe,
+    FormProduitComponent,
+    InfoProduitComponent,
+
+    
   ],
   imports: [
     BrowserModule,
     NgbModule,
     HttpClientModule,
     FormsModule, 
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
   ],
   providers: [],
   bootstrap: [AppComponent]

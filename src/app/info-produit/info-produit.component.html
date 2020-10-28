@@ -1,0 +1,31 @@
+<div>
+   
+    <h3>Information produit</h3>
+    <p *ngIf='!infoProduit'>Cliquez sur un produit</p>
+    <ul *ngIf='infoProduit' class="list-group list-group-flush">
+        <li class="list-group-item">Nom : {{infoProduit.libelle}}</li>
+        <li class="list-group-item">Categorie : {{infoProduit.categorie | enum2str}}</li>
+        <li class="list-group-item">Conditionnement : {{infoProduit.conditionnement.emballage | enum2str }}
+            de {{infoProduit.conditionnement.poids}} {{infoProduit.conditionnement.unite | unite}}</li>
+        <li class="list-group-item">Prix : {{infoProduit.prix}}</li>
+        <li class="list-group-item">Prix au Kg : {{infoProduit.prixKg}}</li>
+        <li class="list-group-item">Magasin : {{infoProduit.magasin | enum2str}}</li>
+        <li class="list-group-item">Quantité par personne :
+            {{infoProduit.quantiteParPersonne}}{{infoProduit.unite | unite}}</li>
+        <li class="list-group-item">Ajouter le : </li>
+        <li class="list-group-item">Mis a jour le : </li>
+    </ul>
+</div>
+<div>
+    <button *ngIf='!infoProduit' routerLink="/produit/form" style="float: right;"
+        class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">ajouter</button>
+
+        <button *ngIf='infoProduit' routerLink="/produit/form/{{infoProduit.id}}" style="float: right;"
+        class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Editer</button>
+
+        <button *ngIf='infoProduit' (click)="viderInfo()" style="float: right;"
+        class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Retour</button>
+
+
+
+</div>

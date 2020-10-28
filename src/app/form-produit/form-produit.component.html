@@ -1,0 +1,147 @@
+<div>
+    <form>
+        <fieldset>
+            <legend>Information</legend>
+            <!-- ligne 1 nom du produit -->
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="nom">Username</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Nom</div>
+                        </div>
+                        <input type="text" class="form-control" id="nom" name='nom' placeholder="Nom du produit"
+                            [(ngModel)]='nom'>
+                    </div>
+                </div>
+            </div>
+            <!-- ligne 2 categorie du produit -->
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="categorie">Categorie</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Categorie</div>
+                        </div>
+                        <select [(ngModel)]="categorie" class="form-control" id="categorie" name="CATEGORIE">
+                            <option selected disabled>-- categorie --</option>
+                            <option *ngFor="let cats of enumCat" value="{{cats}}">{{cats | enum2str}}</option>
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ligne 3 prix du produit -->
+
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="prix">Prix</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Prix</div>
+                        </div>
+                        <input [(ngModel)]="prix" class="form-control" type="number" name="prix" placeholder="prix">
+                    </div>
+                </div>
+            </div>
+            <!-- ligne 4 magasin du produit -->
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="magasin">Magasin</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Magasin</div>
+                        </div>
+                        <select [(ngModel)]="magasin" class="form-control" name="magasin">
+                            <option selected disabled>-- Magasin --</option>
+                            <option *ngFor="let magasins of enumMagasin" value="{{magasins}}">{{magasins | enum2str}}
+                            </option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Quantité par personne</legend>
+
+            <!-- ligne 5 qtePersone du produit -->
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="quantite">Quantité</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Quantité</div>
+                        </div>
+                        <input [(ngModel)]="quantite" class="form-control" type="text" name="qtePers"
+                            placeholder="quantité par personne">
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="sr-only" for="unite">Unite</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Unité</div>
+                        </div>
+                        <select [(ngModel)]="unite" class="form-control" name="conditionnement">
+                            <option selected disabled>-- Unité --</option>
+                            <option *ngFor="let unites of enumUnite" value="{{unites}}">{{unites | unite}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!-- ligne 6 conditionnement du produit -->
+        <fieldset>
+            <legend>Conditionnement</legend>
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="conditionnement">Conditionnement</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Conditionnement</div>
+                        </div>
+                        <select [(ngModel)]="emballage" [(ngModel)]="emballage" class="form-control" id="conditionnement"
+                            name="emballage">
+                            <option selected disabled>Emballage</option>
+                            <option *ngFor="let cond of enumCondit" value="{{cond}}">{{cond | enum2str}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--ligne 7 poids du conditionnement-->
+            <div class="row">
+                <div class="col">
+                    <label class="sr-only" for="poidsCond">poids du conditionnement</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Quantité</div>
+                        </div>
+                        <input [(ngModel)]="poidsConditionnement" class="form-control" type="text"
+                            name="poidsConditionnement">
+                    </div>
+                </div>
+                <div class="col">
+                    <label class="sr-only" for="uniteCond">unite conditionnement</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Unité</div>
+                        </div>
+                        <select [(ngModel)]="uniteConditionnement" class="form-control" name="unitePackage">
+                            <option selected disabled>unit</option>
+                            <option *ngFor="let unites of enumUnite" value="{{unites}}">{{unites | unite}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div>
+    <button *ngIf="id==0" style="float: right;" (click)="save(true)" class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Sauvegarder</button>
+    <button *ngIf="id!=0" style="float: right;" (click)="save(false)" class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Mettre a jour</button>
+
+    <button *ngIf="!inModal" routerLink="/produit/info" style="float: right;"
+        class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Annuler</button>
+</div>

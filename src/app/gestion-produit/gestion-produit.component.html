@@ -1,1 +1,81 @@
-<p>gestion-produit works!</p>
+<!-- sousMenu produit -->
+<nav style="background-color: #d3d3db !important;" class="navbar navbar-expand-md navbar-light bg-light">
+    <button class="navbar-toggler d-lg-none" type="button" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
+        <!-- select filtre magasin -->
+        <label class="sr-only" for="magasin">Magasin</label>
+        <div style="width: 25%;" class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Magasin</div>
+            </div>
+            <select (change)="majList()" [(ngModel)]="filtreMagasin" class="custom-select">
+                <option selected value="tout">Afficher tout</option>
+                <option *ngFor="let mag of listeMagasin" value="{{mag}}">{{mag | enum2str}}</option>
+            </select>
+        </div>
+        <!-- select filtre categorie -->
+        <label class="sr-only" for="categorie">categorie</label>
+        <div style="width: 25%;" class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Categorie</div>
+            </div>
+            <select (change)="majList()" [(ngModel)]="filtreCategorie" class="custom-select">
+                <option selected value="tout">Afficher tout</option>
+                <option *ngFor="let cat of listeCategorie" value="{{cat}}">{{cat | enum2str}}</option>
+            </select>
+        </div>
+        <!-- recherche -->
+        <label class="sr-only" for="recherche">recherche</label>
+        <div style="width: 25%;" class="input-group mb-2 ml-auto">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Recherche</div>
+            </div>
+            <input list="acProduits" [(ngModel)]="recherche" (input)="search()" style="width: 30%;"
+                class="form-control ml-auto" type="search" placeholder="Search" aria-label="Search">
+            <datalist id="acProduits">
+                <option *ngFor="let acPr of acProduits" value="{{acPr.libelle}}">
+            </datalist>
+        </div>
+    </div>
+</nav>
+<!-- main produit -->
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <div style="height: 50vh !important; overflow: auto;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Libelle</th>
+                            <th scope="col">Categorie</th>
+                            <th scope="col">Conditionnement</th>
+                            <th scope="col">Magasin</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="listeProduit && listeProduit.length>0">
+                        <tr *ngFor="let produit of listeProduit" (click)="loadInfo(produit.id)"
+                            routerLink="/produit/info" [ngClass]="{'table-info': infoProduit!=null && produit.id === infoProduit.id}">
+                            <td>{{produit.libelle}}</td>
+                            <td>{{produit.categorie| enum2str}}</td>
+                            <td>{{produit.conditionnement.emballage | enum2str}} de
+                                {{produit.conditionnement.poids}} {{produit.conditionnement.unite | unite}}</td>
+                            <td>{{produit.magasin | enum2str}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p *ngIf="!listeProduit ||listeProduit.length==0 ">rien a afficher</p>
+            </div>
+        </div>
+        <div class="col">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-3">
+            <p *ngIf="listeProduit">nombre d'elements : {{listeProduit.length}}</p>
+        </div>
+    </div>
+</div>
