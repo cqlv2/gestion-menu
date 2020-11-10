@@ -1,0 +1,138 @@
+<div style='width: 60%;' class="input-group mb-3 mx-auto">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Mois</label>
+    </div>
+    <select class="custom-select" (change)="checkDate()" [(ngModel)]="showMonth">
+        <option *ngFor="let mois of listeMois" value={{mois[1]}}>{{mois[0]}}</option>
+    </select>
+
+    <select class="custom-select" (change)="checkDate()" [(ngModel)]="showYears">
+        <option *ngFor="let annee of listeAnnee" value="{{annee}}">{{annee}}</option>
+    </select>
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Année</label>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-1 d-flex align-items-center p-0">
+            <button (click)="prevMonth()" class='btn btn-primary'>prev</button>
+        </div>
+        <div class="col-10">
+            <!-- Affichage du calendrier -->
+            <table class="table table-bordered">
+                <!-- en tete jour de la semaine -->
+                <thead>
+                    <tr>
+                        <th *ngFor="let jour of listeJourSemaine" scope="col">{{jour[0]}}</th>
+                    </tr>
+                </thead>
+                <!-- corps -->
+                <tbody>
+                    <!-- ligne de la selaine -->
+                    <tr *ngFor="let semaine of calendar">
+                        <!-- case du jour de la semaine -->
+                        <td *ngFor="let jour of semaine"
+                            [ngClass]="{'selected': jour!=null && dateSelect.getDate() === jour.date.getDate()}" (click)="selectDate(jour.date)">
+                            <div *ngIf="jour==null"></div>
+                            <div *ngIf="jour!=null">
+                                <p>{{jour.date.getDate()}}</p>
+                                <table class="table mt-1">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding:0;height: 10px;">
+                                                <div *ngIf="jour.midi1" class="m-1"
+                                                    style="width: 5px; height: 10px;background-color: green;"> </div>
+                                                <div *ngIf="!jour.midi1" class="m-1" style="width: 5px; height: 10px;">
+                                                </div>
+                                            </td>
+                                            <td style="padding:0;height: 10px;">
+                                                <div *ngIf="jour.midi2" class="m-1"
+                                                    style="width: 5px; height: 10px;background-color: green;"> </div>
+                                                <div *ngIf="!jour.midi2" class="m-1" style="width: 5px; height: 10px;">
+                                                </div>
+                                            </td>
+                                            <td style="padding:0;height: 10px;">
+                                                <div *ngIf="jour.soir1" class="m-1"
+                                                    style="width: 5px; height: 10px;background-color: green;"> </div>
+                                                <div *ngIf="!jour.soir1" class="m-1" style="width: 5px; height: 10px;">
+                                                </div>
+                                            </td>
+                                            <td style="padding:0;height: 10px;">
+                                                <div *ngIf="jour.soir2" class="m-1"
+                                                    style="width: 5px; height: 10px;background-color: green;"> </div>
+                                                <div *ngIf="!jour.soir2" class="m-1" style="width: 5px; height: 10px;">
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1 d-flex align-items-center p-0">
+            <button (click)="nextMonth()" class='btn btn-primary'>next</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+semaine
+
+
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    
+    
+    <ngb-panel title="lun">
+        <ng-template ngbPanelContent>
+          lun
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="mar">
+        <ng-template ngbPanelContent>
+          mar
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="mer">
+        <ng-template ngbPanelContent>
+          mer
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="jeu">
+        <ng-template ngbPanelContent>
+          jeu
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="ven">
+        <ng-template ngbPanelContent>
+          ven
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="Sam">
+        <ng-template ngbPanelContent>
+          sam
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel title="Dim">
+        <ng-template ngbPanelContent>
+          dim
+        </ng-template>
+      </ngb-panel>
+
+
+
+
+  </ngb-accordion> -->

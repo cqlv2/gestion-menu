@@ -1,0 +1,20 @@
+
+th, td{
+    padding: 5px;
+    text-align: center;
+  }
+  td{
+    height: 80px;
+  }
+td:hover{
+    background-color: #eee;
+    transition: 0.5s;
+}
+span.date{
+    float:right;
+    font-size: 0.7em;
+}
+.selected{
+background-color: rgb(227, 243, 231);
+border: 1px solid  rgb(164, 235, 191);
+}

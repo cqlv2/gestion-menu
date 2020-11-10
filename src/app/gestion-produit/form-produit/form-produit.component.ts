@@ -1,11 +1,12 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
-import { Produit } from '../models/produit';
-import { ProduitService } from '../service/produit.service';
 import { ActivatedRoute } from '@angular/router';
-import { NewProduitDto } from '../models/newProduitDto';
 import { Router } from '@angular/router';
-
-
+import { Filters } from 'src/app/models/filters';
+//models
+import { NewProduitDto } from '../../models/newProduitDto';
+import { Produit } from '../../models/produit';
+//services
+import { ProduitService } from '../../service/produit.service';
 
 @Component({
   selector: 'app-form-produit',
@@ -29,21 +30,21 @@ export class FormProduitComponent implements OnInit {
   magasin: string;
   quantite: number;
   unite: string;
-
   enumCat: string[];
   enumUnite: string[];
   enumCondit: string[];
   enumMagasin: string[];
 
+  filters:Filters=new Filters;
   constructor(private prServ: ProduitService, private route: ActivatedRoute, private router: Router) {
-
-
+    this.prServ.getFromFiltersSub().subscribe(
+      filters => this.filters=filters,
+      err => console.log("erreur PR3 : " + err),
+      () => console.log("fin PR3")
+    );
   }
 
-
-
   ngOnInit(): void {
-
     this.id = Number(this.route.snapshot.paramMap.get("id"))
     if (this.id > 0) {
       this.prServ.getProduitById(this.id).subscribe(data => {
@@ -52,14 +53,19 @@ export class FormProduitComponent implements OnInit {
         this.emballage = data.conditionnement.emballage;
         this.poidsConditionnement = data.conditionnement.poids;
         this.uniteConditionnement = data.conditionnement.unite
-
         this.prix = data.prix;
         this.prixKg = data.prixKg;
         this.magasin = data.magasin;
-        this.quantite = data.quantiteParPersonne;      
+        this.quantite = data.quantiteParPersonne;
         this.unite = data.unite;
       })
     }
+    //
+    this.prServ.getFromFiltersSub().subscribe(
+      filters => this.filters=filters,
+      err => console.log("erreur PR3 : " + err),
+      () => console.log("fin PR3")
+    );
     //
     this.prServ.getAllEnum().subscribe(e => {
       this.enumCat = e.categories;
@@ -78,9 +84,6 @@ export class FormProduitComponent implements OnInit {
 
     let prDto = new NewProduitDto();
     if (!isNew) prDto.id = this.id;
-    
-    
-    
     prDto.libelle = this.nom;
     prDto.categorie = this.categorie;
     prDto.emballage = this.emballage;
@@ -91,18 +94,33 @@ export class FormProduitComponent implements OnInit {
     prDto.magasin = this.magasin;
     prDto.quantiteParPersonne = this.quantite;
     prDto.unite = this.unite;
-console.log(prDto);
-
     if (isNew) {
-      this.prServ.addNew(prDto).subscribe(data => {
-        this.prServ.sendToPrSub(data);
-      });
+      this.prServ.addNew(prDto).subscribe(
+        produit => {
+          this.prServ.sendToPrSub(produit)
+          this.prServ.getListProduits(this.filters).subscribe(
+            listPr => this.prServ.sendToProduitsSub(listPr),
+            err => console.log("erreur PR3 : " + err),
+            () => console.log("fin PR3")
+          );
+        },
+        err => console.log("erreur PR1 : " + err),
+        () => console.log("fin PR1")
+      );
     }
     else {
-    
-      this.prServ.edit(prDto).subscribe(data => {
-        this.prServ.sendToPrSub(data);
-      });
+      this.prServ.edit(prDto).subscribe(
+        produit => {
+          this.prServ.sendToPrSub(produit)
+          this.prServ.getListProduits(this.filters).subscribe(
+            listPr => this.prServ.sendToProduitsSub(listPr),
+            err => console.log("erreur PR3 : " + err),
+            () => console.log("fin PR3")
+          );
+        },
+        err => console.log("erreur PR1 : " + err),
+        () => console.log("fin PR1")
+      );
     }
     this.router.navigateByUrl('/produit/info');
   }

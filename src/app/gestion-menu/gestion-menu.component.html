@@ -1,1 +1,24 @@
-<p>gestion-menu works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col col-md-8">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Mois</a>
+                    <ng-template ngbNavContent>
+                        <app-calendrier></app-calendrier>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Semaine</a>
+                    <ng-template ngbNavContent>
+                        <app-calendar-hebdo></app-calendar-hebdo>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+        <div class="col">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

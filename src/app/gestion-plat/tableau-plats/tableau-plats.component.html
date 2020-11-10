@@ -1,0 +1,20 @@
+<div style="height: 50vh !important; overflow: auto;">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Plat</th>
+                <th scope="col">Note</th>
+
+            </tr>
+        </thead>
+        <tbody *ngIf="listePlat && listePlat.length>0">
+            <tr *ngFor="let plat of listePlat" (click)="onSelect(plat.id)" routerLink="/plat/info"
+                [ngClass]="{'table-info': selected!=null && plat.id === selected}">
+                <td>{{plat.nom}}</td>
+                <td>{{plat.note|rate}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!listePlat ||listePlat.length==0 ">rien a afficher</p>
+</div>
+<p *ngIf="listePlat">nombre d'elements : {{listePlat.length}}</p>

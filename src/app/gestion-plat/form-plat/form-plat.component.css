@@ -1,0 +1,20 @@
+p.prod{
+    border: 1px solid black;
+    border-radius: 10vw;
+
+    padding: 5px 10px;
+    background-color: rgb(250, 245, 245);
+}
+span.close{
+    float: right; 
+    width: 25px;
+    height: 25px;
+    border: 3px outset #f11;
+    border-radius: 10vw;
+    padding: 5px 5px;
+    background-color: #d55;
+    color: #eee;
+    font-size: 0.6em;
+    text-align: center;
+    cursor: pointer;
+}

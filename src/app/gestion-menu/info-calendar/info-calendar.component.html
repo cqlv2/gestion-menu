@@ -1,0 +1,28 @@
+
+
+
+<div style='height: 100%;'class="d-flex flex-column justify-content-center align-items-center" *ngIf="menu==null">
+    <p class="text-center">{{date| date:'EEEE d MMMM yyyy'}} <br>  Aucun menu enregistré !</p>
+    <button type="button" class="btn btn-secondary mx-auto" routerLink="/menu/form">Ajouter</button>
+</div>
+
+
+
+<div *ngIf="menu!=null">
+    <h3>{{date| date:'EEEE d MMMM yyyy'}}</h3>
+    <fieldset class="my-5" *ngIf="menu.midi1!=null || menu.midi2!=null">
+        <legend>Midi</legend>
+        <p *ngIf="menu.midi1!=null">{{menu.midi1.nom}} ({{menu.couvertMidi1}}pers.)</p>
+        <p *ngIf="menu.midi2!=null">{{menu.midi2.nom}} ({{menu.couvertMidi2}}pers.)</p>
+    </fieldset>
+    
+    
+    <fieldset class="my-5" *ngIf="menu.soir1!=null || menu.soir2!=null">
+        <legend>Soir</legend>
+        <p *ngIf="menu.soir1!=null">{{menu.soir1.nom}} ({{menu.couvertSoir1}}pers.)</p>
+        <p *ngIf="menu.soir2!=null">{{menu.soir2.nom}} ({{menu.couvertSoir2}}pers.)</p>
+    </fieldset>
+
+    <button type="button" class="btn btn-secondary mx-auto" routerLink="/menu/form/{{menu.id}}">Editer</button>
+
+</div>

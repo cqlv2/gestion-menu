@@ -1,0 +1,24 @@
+<div style="height: 50vh !important; overflow: auto;">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Libelle</th>
+                <th scope="col">Categorie</th>
+                <th scope="col">Conditionnement</th>
+                <th scope="col">Magasin</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="listeProduits && listeProduits.length>0">
+            <tr *ngFor="let produit of listeProduits" (click)="onSelect(produit.id)" routerLink="/produit/info"
+                [ngClass]="{'table-info': selected!=null && produit.id === selected}">
+                <td>{{produit.libelle}}</td>
+                <td>{{produit.categorie| enum2str}}</td>
+                <td>{{produit.conditionnement.emballage | enum2str}} de
+                    {{produit.conditionnement.poids}} {{produit.conditionnement.unite | unite}}</td>
+                <td>{{produit.magasin | enum2str}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!listeProduits ||listeProduits.length==0 ">rien a afficher</p>
+</div>
+<p *ngIf="listeProduits">nombre d'elements : {{listeProduits.length}}</p>

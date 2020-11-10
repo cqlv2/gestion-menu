@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GestionMenuComponent implements OnInit {
 
+  activeId:number=1;
+
   constructor() { }
 
   ngOnInit(): void {

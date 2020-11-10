@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Produit } from '../models/produit';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ProduitDto } from "../models/produitDto";
+
 import { NewProduitDto } from "../models/newProduitDto";
+import { Produit } from '../models/produit';
+import { Filters } from "../models/filters";
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +13,36 @@ export class ProduitService {
 
   produitSub = new Subject<Produit>();
   produitsSub = new Subject<Produit[]>();
-
-
+  filterSub = new Subject<Filters>();
+  enumSub = new Subject<any>();
   constructor(private http: HttpClient) {
-
   }
 
   getAllProduits() {
     return this.http.get<Produit[]>("http://localhost:8080/produit");
   }
 
-  getProduitBy(mag: string, cat: string) {
-    let url: string = "http://localhost:8080/produit";
-    if (mag != "tout" && cat != "tout") url += "?cat=" + cat + "&mag=" + mag;
-    else if (mag == "tout" && cat != "tout") url += "?type=categorie&value=" + cat;
-    else if (mag != "tout" && cat == "tout") url += "?type=magasin&value=" + mag;
+  getListProduits(filters: Filters) {
+    let url = "http://localhost:8080/produit/filter";
+    if (filters.magasin != "") {
+      console.log(filters.magasin);
+      
+      if (url.indexOf("?") == -1) url += "?";
+      else url += "&";
+      url += "magasin=" + filters.magasin;
+    }
+
+    if (filters.categorie != "") {
+      if (url.indexOf("?") == -1) url += "?";
+      else url += "&";
+      url += "categorie=" + filters.categorie;
+    }
+
+    if (filters.recherche != "") {
+      if (url.indexOf("?") == -1) url += "?";
+      else url += "&";
+      url += "search=" + filters.recherche;
+    }
     return this.http.get<Produit[]>(url);
   }
 
@@ -39,8 +55,6 @@ export class ProduitService {
   }
 
   addNew(newProduitDto: NewProduitDto) {
-   
-    
     return this.http.post<any>("http://localhost:8080/produit", newProduitDto);
   }
 
@@ -48,11 +62,8 @@ export class ProduitService {
     return this.http.put<any>("http://localhost:8080/produit", produitDto);
   }
 
-  search(word) {
-    return this.http.get<Produit[]>("http://localhost:8080/produit?type=libelle&value="+word);
-  }
 
-
+  // get/set subject
 
   sendToPrSub(produit: Produit) {
     this.produitSub.next(produit);
@@ -62,6 +73,14 @@ export class ProduitService {
     this.produitsSub.next(produit);
   }
 
+  sendToFilterSub(filters: Filters) {
+    this.filterSub.next(filters);
+  }
+
+  sendToEnumSub(enums: any) {
+    this.enumSub.next(enums);
+  }
+
   getFromPrSub() {
     return this.produitSub.asObservable();
   }
@@ -69,6 +88,12 @@ export class ProduitService {
     return this.produitsSub.asObservable();
   }
 
+  getFromFiltersSub() {
+    return this.filterSub.asObservable();
+  }
 
+  getFromEnumSub() {
+    return this.enumSub.asObservable();
+  }
 
 }

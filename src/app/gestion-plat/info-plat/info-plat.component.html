@@ -1,0 +1,26 @@
+<div class="d-flex flex-column justify-content-center" *ngIf="plat==null">
+    <p class='text-center'>Pour commencer, cliquez sur un plat<br>ou</p>
+    <button type="button" class="btn btn-secondary mx-auto" routerLink="/plat/form">Ajouter</button>
+</div>
+
+<div style="height: 50vh; overflow: auto;" *ngIf="plat!=null">
+    <h3>{{plat.nom}}</h3>
+    <p style='font-size: 0.8em; float: right'>{{plat.note|rate}}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">quantité/Pers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pr of plat.produits">
+                <td>{{pr.libelle}}</td>
+                <td>{{pr.quantiteParPersonne}}{{pr.unite|unite}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button style="float: right;" type="button" class="btn btn-secondary ml-3" routerLink="/plat/form/{{plat.id}}">Editer</button>
+    <button style="float: right;" (click)="unselect()" type="button" class="btn btn-secondary ml-3">Retout</button>
+
+</div>

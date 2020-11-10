@@ -7,8 +7,8 @@
         <li class="list-group-item">Categorie : {{infoProduit.categorie | enum2str}}</li>
         <li class="list-group-item">Conditionnement : {{infoProduit.conditionnement.emballage | enum2str }}
             de {{infoProduit.conditionnement.poids}} {{infoProduit.conditionnement.unite | unite}}</li>
-        <li class="list-group-item">Prix : {{infoProduit.prix}}</li>
-        <li class="list-group-item">Prix au Kg : {{infoProduit.prixKg}}</li>
+        <li class="list-group-item">Prix : {{infoProduit.prix}}€</li>
+        <li class="list-group-item">Prix au Kg : {{infoProduit.prixKg}}€    </li>
         <li class="list-group-item">Magasin : {{infoProduit.magasin | enum2str}}</li>
         <li class="list-group-item">Quantité par personne :
             {{infoProduit.quantiteParPersonne}}{{infoProduit.unite | unite}}</li>
@@ -25,7 +25,4 @@
 
         <button *ngIf='infoProduit' (click)="viderInfo()" style="float: right;"
         class="btn btn-outline-secondary mr-2 my-sm-0 ml-auto">Retour</button>
-
-
-
 </div>

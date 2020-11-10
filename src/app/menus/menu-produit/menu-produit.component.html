@@ -1,0 +1,44 @@
+<!-- sousMenu produit -->
+
+<nav style="background-color: #d3d3db !important;" class="navbar navbar-expand-md navbar-light bg-light">
+    <button class="navbar-toggler d-lg-none" type="button" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
+        <!-- select filtre magasin -->
+        <label class="sr-only" for="magasin">Magasin</label>
+        <div style="width: 25%;" class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Magasin</div>
+            </div>
+            <select (change)="setFilters()" [(ngModel)]="filtreMagasin" class="custom-select">
+                <option selected value="">Afficher tout</option>
+                <option *ngFor="let mag of enumMagasins" value="{{mag}}">{{mag | enum2str}}</option>
+            </select>
+        </div>
+        <!-- select filtre categorie -->
+        <label class="sr-only" for="categorie">categorie</label>
+        <div style="width: 25%;" class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Categorie</div>
+            </div>
+            <select (change)="setFilters()" [(ngModel)]="filtreCategorie" class="custom-select">
+                <option selected value="">Afficher tout</option>
+                <option *ngFor="let cat of enumCategories" value="{{cat}}">{{cat | enum2str}}</option>
+            </select>
+        </div>
+        <!-- recherche -->
+        <label class="sr-only" for="recherche">recherche</label>
+        <div style="width: 25%;" class="input-group mb-2 ml-auto">
+            <div class="input-group-prepend">
+                <div class="input-group-text">Recherche</div>
+            </div>
+            <input list="acProduits" (input)="setFilters()" [(ngModel)]="recherche"  style="width: 30%;"
+                class="form-control ml-auto" type="search" placeholder="Recherche" aria-label="Recherche">
+            <datalist id="acProduits">
+                <!-- <option *ngFor="let acPr of acProduits" value="{{acPr.libelle}}"> -->
+            </datalist>
+        </div>
+    </div>
+</nav>
